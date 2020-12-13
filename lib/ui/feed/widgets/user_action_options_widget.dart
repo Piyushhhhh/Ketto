@@ -22,8 +22,8 @@ class UserActionOptionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      elevation: 0,
+    return Material(
+      color: Colors.white,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(50))),
       child: Padding(
