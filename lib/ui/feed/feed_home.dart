@@ -619,7 +619,7 @@ class _FeedHomeState extends State<FeedHome> {
         'LifeStyle',
         DateTime.now(),
         '',
-        'Somthing to motivate you',
+        'Something to motivate you',
         AddressModel('Ideal tower', 'Shankheshwar nagar', 'Nalasopara'),
         [
           LikeModel(
@@ -804,7 +804,7 @@ class _FeedHomeState extends State<FeedHome> {
         'LifeStyle',
         DateTime.now(),
         '',
-        'Somthing to motivate you',
+        'Something to motivate you',
         AddressModel('Ideal tower', 'Shankheshwar nagar', 'Nalasopara'),
         [
           LikeModel(
