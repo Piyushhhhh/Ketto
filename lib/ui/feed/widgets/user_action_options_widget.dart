@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
-class UserActionOptionsWidget extends StatelessWidget {
+class UserActionOptionsWidget extends StatefulWidget {
+  @override
+  _UserActionOptionsWidgetState createState() =>
+      _UserActionOptionsWidgetState();
+}
+
+class _UserActionOptionsWidgetState extends State<UserActionOptionsWidget> {
+  bool showDialog = true;
+
   Row getReactionWidget(String text, String iconPath) {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -22,30 +30,36 @@ class UserActionOptionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50))),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: <Widget>[
-            GestureDetector(
-              child:
-                  getReactionWidget("Like", "assets/images/Likereaction.png"),
-              onTap: () {},
+    return showDialog
+        ? GestureDetector(
+            onTap: () {
+              setState(() {
+                showDialog = false;
+              });
+            },
+            child: Dialog(
+              elevation: 0.7,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50))),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: <Widget>[
+                    getReactionWidget("Like", "assets/images/Likereaction.png"),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    getReactionWidget(
+                        "Haha", "assets/images/Happyreaction.png"),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    getReactionWidget("Sad", "assets/images/Sadreaction.png"),
+                  ],
+                ),
+              ),
             ),
-            SizedBox(
-              width: 16,
-            ),
-            getReactionWidget("Haha", "assets/images/Happyreaction.png"),
-            SizedBox(
-              width: 16,
-            ),
-            getReactionWidget("Sad", "assets/images/Sadreaction.png"),
-          ],
-        ),
-      ),
-    );
+          )
+        : Container();
   }
 }

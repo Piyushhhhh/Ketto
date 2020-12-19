@@ -162,15 +162,17 @@ class _FeedHomeState extends State<FeedHome> {
       child: Scaffold(
         backgroundColor: Color(0xffE8EBEF),
         body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
+          child: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  floating: true,
+                  pinned: false,
+                  snap: false,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: ListTile(
+                      dense: true,
                       title: Text(
                         'COMMUNITY',
                         style: commonTextStyles.homeFeedSubTitleText,
@@ -204,169 +206,184 @@ class _FeedHomeState extends State<FeedHome> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: themes.secondaryPrimaryColor)),
-                                  focusColor: themes.secondaryPrimaryColor,
-                                  hintText: 'Search posts and members',
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: themes.secondaryPrimaryColor)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: themes.primaryColor)),
-                                  hintStyle:
-                                      commonTextStyles.homePostFieldHintText,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 16),
-                                  suffixIcon: Icon(
-                                    FontAwesomeIcons.search,
-                                    size: 18,
-                                    color: themes.secondaryGrey,
-                                  )),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Image.asset(
-                              "assets/images/homeNotificationIcon.png",
-                              height: 24,
-                              width: 24,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 48,
-                      padding: EdgeInsets.only(bottom: 16),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.grey, width: 0.3))),
-                      child: ListView.separated(
-                          controller: postsScrollController,
-                          separatorBuilder: (context, index) => SizedBox(
-                                width: 12,
+                  ),
+                ),
+              ];
+            },
+            body: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color:
+                                                themes.secondaryPrimaryColor)),
+                                    focusColor: themes.secondaryPrimaryColor,
+                                    hintText: 'Search posts and members',
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color:
+                                                themes.secondaryPrimaryColor)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: themes.primaryColor)),
+                                    hintStyle:
+                                        commonTextStyles.homePostFieldHintText,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                    suffixIcon: Icon(
+                                      FontAwesomeIcons.search,
+                                      size: 18,
+                                      color: themes.secondaryGrey,
+                                    )),
                               ),
-                          itemCount: tags.length,
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.only(left: 16, right: 16),
-                          itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedTag = tags[index];
-                                  });
-                                },
-                                child: Chip(
-                                  shape: StadiumBorder(
-                                      side: BorderSide(
-                                          color: themes.secondaryPrimaryColor)),
-                                  backgroundColor:
-                                      tags[index].compareTo(selectedTag) == 0
-                                          ? themes.secondaryPrimaryColor
-                                          : Colors.white,
-                                  label: Text(
-                                    tags[index],
-                                    style:
-                                        TextStyle(color: themes.primaryColor),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Image.asset(
+                                "assets/images/homeNotificationIcon.png",
+                                height: 24,
+                                width: 24,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 48,
+                        padding: EdgeInsets.only(bottom: 16),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.grey, width: 0.3))),
+                        child: ListView.separated(
+                            controller: postsScrollController,
+                            separatorBuilder: (context, index) => SizedBox(
+                                  width: 12,
+                                ),
+                            itemCount: tags.length,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.only(left: 16, right: 16),
+                            itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedTag = tags[index];
+                                    });
+                                  },
+                                  child: Chip(
+                                    shape: StadiumBorder(
+                                        side: BorderSide(
+                                            color:
+                                                themes.secondaryPrimaryColor)),
+                                    backgroundColor:
+                                        tags[index].compareTo(selectedTag) == 0
+                                            ? themes.secondaryPrimaryColor
+                                            : Colors.white,
+                                    label: Text(
+                                      tags[index],
+                                      style:
+                                          TextStyle(color: themes.primaryColor),
+                                    ),
+                                  ),
+                                )),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 12),
+                      itemBuilder: (context, index) {
+                        Widget article;
+                        if (!articleDisplayed &&
+                            articles != null &&
+                            articles.length > 0 &&
+                            (index > 3 || index == (posts.length - 1))) {
+                          article = article = SizedBox(
+                            height: 165,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 16, top: 16),
+                                  child: Text(
+                                    'LATEST ARTICLES',
+                                    style: commonTextStyles.articleListTitle,
                                   ),
                                 ),
-                              )),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(top: 12),
-                    itemBuilder: (context, index) {
-                      Widget article;
-                      if (!articleDisplayed &&
-                          articles != null &&
-                          articles.length > 0 &&
-                          (index > 3 || index == (posts.length - 1))) {
-                        article = article = SizedBox(
-                          height: 165,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 16, top: 16),
-                                child: Text(
-                                  'LATEST ARTICLES',
-                                  style: commonTextStyles.articleListTitle,
+                                SizedBox(
+                                  height: 12,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Expanded(
-                                child: ListView.separated(
-                                    padding: EdgeInsets.only(left: 16),
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, i) =>
-                                        ArticleItemWidget(articles[i]),
-                                    separatorBuilder: (context, i) => SizedBox(
-                                          width: 16,
-                                        ),
-                                    itemCount: articles.length),
-                              ),
-                              SizedBox(
-                                height: 14,
-                              )
-                            ],
-                          ),
-                        );
-                        articleDisplayed = true;
-                      }
-                      var model;
-                      Widget postWidget;
-                      if (posts[index] is PostModel) {
-                        model = posts[index];
-                        postWidget = PostItemWidget(
-                          model,
-                          onItemTap: openDetailsPage,
-                        );
-                      } else if (posts[index] is EventModel) {
-                        model = posts[index];
-                        postWidget = EventWidgetItem(
-                          model,
-                        );
-                      } else
-                        return SizedBox();
-
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          postWidget,
-                          if (article != null)
-                            SizedBox(
-                              height: 10,
+                                Expanded(
+                                  child: ListView.separated(
+                                      padding: EdgeInsets.only(left: 16),
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, i) =>
+                                          ArticleItemWidget(articles[i]),
+                                      separatorBuilder: (context, i) =>
+                                          SizedBox(
+                                            width: 16,
+                                          ),
+                                      itemCount: articles.length),
+                                ),
+                                SizedBox(
+                                  height: 14,
+                                )
+                              ],
                             ),
-                          if (article != null) article
-                        ],
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: 10,
-                        ),
-                    itemCount: posts.length),
-              ),
-            ],
+                          );
+                          articleDisplayed = true;
+                        }
+                        var model;
+                        Widget postWidget;
+                        if (posts[index] is PostModel) {
+                          model = posts[index];
+                          postWidget = PostItemWidget(
+                            model,
+                            onItemTap: openDetailsPage,
+                          );
+                        } else if (posts[index] is EventModel) {
+                          model = posts[index];
+                          postWidget = EventWidgetItem(
+                            model,
+                          );
+                        } else
+                          return SizedBox();
+
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            postWidget,
+                            if (article != null)
+                              SizedBox(
+                                height: 10,
+                              ),
+                            if (article != null) article
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(
+                            height: 10,
+                          ),
+                      itemCount: posts.length),
+                ),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: BottomNavWidget(bottomNavItems),
