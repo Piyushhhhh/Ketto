@@ -1,6 +1,8 @@
 # ketto
 
-A new Flutter application.
+A Social Networking app made in flutter .
+
+![alt text](https://github.com/Piyushhhhh/Ketto/blob/master/assets/images/Screenshot%202020-06-23%20at%2012.10.33%20PM.png?raw=true)
 
 ## Getting Started
 
